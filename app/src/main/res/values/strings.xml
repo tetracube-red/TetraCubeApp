@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">TetraCubeApp</string>
+
+    <!-- Splash Screen -->
+    <string name="start">Starting</string>
+    <string name="checking_configuration">Checking configuration</string>
+    <string name="success">Completed</string>
+    <string name="error">Error</string>
+    <string name="missing_configuration">Missing configuration</string>
+    <string name="logging_in">Logging in</string>
+    <string name="getting_tetracube_metadata">Getting tetracube metadata</string>
+    <string name="missing_hosts">Missing Hosts</string>
 </resources>

@@ -3,13 +3,12 @@ package red.tetracube.tetracubeapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import red.tetracube.tetracubeapp.core.extensions.appSettings
+import red.tetracube.tetracubeapp.platform.TetraCubeAppPlatform
+import red.tetracube.tetracubeapp.platform.TetraCubeAppPlatformViewModel
+import red.tetracube.tetracubeapp.platform.TetraCubeAppPlatformViewModelFactory
 import red.tetracube.tetracubeapp.ui.theme.TetraCubeAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,24 +16,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TetraCubeAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android")
-                }
+                val context = LocalContext.current
+                val appSettings = context.appSettings
+                val tetraCubeAppPlatformViewModel: TetraCubeAppPlatformViewModel = viewModel(
+                    factory = TetraCubeAppPlatformViewModelFactory(appSettings)
+                )
+                TetraCubeAppPlatform(tetraCubeAppPlatformViewModel)
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    TetraCubeAppTheme {
-        Greeting("Android")
     }
 }

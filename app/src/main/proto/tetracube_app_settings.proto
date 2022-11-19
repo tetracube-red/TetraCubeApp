@@ -1,14 +1,14 @@
 syntax = "proto3";
 
-option java_package = "red.tetracube.app.core.settings";
+option java_package = "red.tetracube.tetracubeapp.core.settings";
 option java_multiple_files = true;
 
-message TetracubeSettings {
+message TetraCubeSettings {
   bool application_initialized = 1;
-  repeated PairedTetracube paired_tetracubes = 2;
+  repeated PairedTetraCube paired_tetracubes = 2;
 }
 
-message PairedTetracube {
+message PairedTetraCube {
   bool is_default = 1;
   string authentication_token = 2;
   string refresh_token = 3;
