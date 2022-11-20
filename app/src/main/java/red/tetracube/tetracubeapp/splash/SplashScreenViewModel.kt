@@ -24,10 +24,10 @@ class SplashScreenViewModel : ViewModel() {
         }
         updateSplashFluxState(SplashFluxState.GETTING_TETRACUBE_METADATA)
         delay(200)
-        // if (applicationSettings.configuredTetracubesCount == 0) {
-        //     updateSplashFluxState(SplashFluxState.MISSING_HOSTS)
-        //     return
-        // }
+        if (applicationSettings.pairedTetracubesCount == 0) {
+            updateSplashFluxState(SplashFluxState.MISSING_HOSTS)
+            return
+        }
         /*   TetracubeResources(appSettings.tetracubeVertexApiHost, appSettings.authenticationToken)
                .getTetracubeMetadata { state, response ->
                    updateServiceConnectionStatus(
