@@ -20,6 +20,7 @@ class RegistrationScreenViewModel : ViewModel() {
         private set
 
     private val accountResources = AccountResources()
+    private val passwordRegExValidator = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$".toRegex()
 
     fun updateFormFieldValue(field: FormDataFieldName, fieldValue: String?) {
         val updatedFormValue = when (field) {
@@ -39,6 +40,7 @@ class RegistrationScreenViewModel : ViewModel() {
                     && !updatedFormValue.password.isNullOrEmpty()
                     && !updatedFormValue.tetracubeHostAddress.isNullOrEmpty()
                     && !updatedFormValue.invitationCode.isNullOrEmpty()
+                    && passwordRegExValidator.matches(updatedFormValue.password)
 
         registrationFormData = updatedFormValue.copy(isFormValid = formIsValid)
     }

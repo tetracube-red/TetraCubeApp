@@ -1,9 +1,11 @@
 package red.tetracube.tetracubeapp.registration
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -31,6 +33,23 @@ fun RegistrationScreen(
     val registrationServiceStatus = registrationScreenViewModel.serviceCallStatus
     val coroutineScope = rememberCoroutineScope()
 
+
+    val secondScreenResult = navHostController.currentBackStackEntry
+        ?.savedStateHandle
+        ?.getStateFlow("scanned_data", "")
+
+    LaunchedEffect(
+        key1 = secondScreenResult,
+        block = {
+            if (secondScreenResult != null) {
+                registrationScreenViewModel.updateFormFieldValue(
+                    FormDataFieldName.TETRACUBE_HOST_ADDRESS,
+                    secondScreenResult.value
+                )
+            }
+        }
+    )
+
     RegistrationScreenView(
         registrationFormData = registrationFormData,
         registrationServiceStatus = registrationServiceStatus,
@@ -40,6 +59,9 @@ fun RegistrationScreen(
             coroutineScope.launch {
                 registrationScreenViewModel.onRegistrationButtonClickHandler()
             }
+        },
+        onScanQRCodeButtonTap = {
+            navHostController.navigate("qr-scanner")
         },
         dialogDismissHandler = {
             if (it == ServiceCallStatus.FINISHED_SUCCESS) {
@@ -59,6 +81,7 @@ fun RegistrationScreenView(
     onFieldUpdate: (FormDataFieldName, String) -> Unit,
     onTrailingIconClicked: (FormDataFieldName) -> Unit,
     onRegistrationButtonClicked: () -> Unit,
+    onScanQRCodeButtonTap: () -> Unit,
     dialogDismissHandler: (ServiceCallStatus) -> Unit
 ) {
     val passwordTrailingIcon = if (registrationFormData.passwordHidden) {
@@ -179,6 +202,15 @@ fun RegistrationScreenView(
             onValueChange = { onFieldUpdate(FormDataFieldName.INVITATION_CODE, it) },
             label = { Text(stringResource(FormDataFieldName.INVITATION_CODE.labelId)) }
         )
+
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+            onClick = { onScanQRCodeButtonTap() }
+        ) {
+            Text(stringResource(R.string.scan_qr_code))
+        }
 
         Button(
             modifier = Modifier

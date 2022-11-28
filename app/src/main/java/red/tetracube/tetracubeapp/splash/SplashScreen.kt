@@ -34,22 +34,20 @@ fun SplashScreen(
         key1 = splashFluxState,
         block = {
             when (splashFluxState) {
-                SplashFluxState.START -> {}
-                SplashFluxState.CHECKING_CONFIGURATION -> {}
-                SplashFluxState.SUCCESS -> TODO()
-                SplashFluxState.ERROR -> TODO()
-                SplashFluxState.MISSING_CONFIGURATION ->
-                    navHostController.navigate(LoginScreenRoute.route) {
-                        popUpTo(0)
-                    }
-                SplashFluxState.LOGGING_IN -> {
-
+                SplashFluxState.START,
+                SplashFluxState.CHECKING_CONFIGURATION,
+                SplashFluxState.GETTING_TETRACUBE_METADATA -> {
                 }
-                SplashFluxState.GETTING_TETRACUBE_METADATA -> {}
-                SplashFluxState.MISSING_HOSTS ->
+                SplashFluxState.SUCCESS -> {
+                    // should redirect to home page
+                }
+                SplashFluxState.MISSING_CONFIGURATION,
+                SplashFluxState.LOGGING_IN,
+                SplashFluxState.ERROR -> {
                     navHostController.navigate(LoginScreenRoute.route) {
                         popUpTo(0)
                     }
+                }
             }
         }
     )

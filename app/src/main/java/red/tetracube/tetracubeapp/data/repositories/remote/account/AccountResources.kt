@@ -44,7 +44,7 @@ class AccountResources {
         serviceCallStatus.emit(ServiceCallStatus.CONNECTING)
 
         val enrollmentRequest = RegistrationRequest(username, password, invitationCode)
-        val requestUrl = "${apiServiceAddress.apiAddress()}/account-enrollment"
+        val requestUrl = "${apiServiceAddress.apiAddress()}/account/registration"
         try {
             val response: HttpResponse = client.post(requestUrl) {
                 contentType(ContentType.Application.Json)
@@ -52,7 +52,7 @@ class AccountResources {
                 accept(ContentType.Application.Json)
             }
 
-            if (response.contentType() != ContentType.Application.Json) {
+            if (response.contentType() != null && !response.contentType()!!.match(ContentType.Application.Json)) {
                 serviceCallStatus.emit(ServiceCallStatus.FINISHED_ERROR_NOT_FOUND)
                 return
             }

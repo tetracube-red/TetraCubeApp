@@ -1,10 +1,13 @@
 package red.tetracube.tetracubeapp.platform
 
+import androidx.camera.core.ExperimentalGetImage
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import red.tetracube.tetracubeapp.codescanner.CameraQRScannerScreen
+import red.tetracube.tetracubeapp.codescanner.CameraQRScannerScreenRoute
 import red.tetracube.tetracubeapp.core.settings.TetraCubeSettings
 import red.tetracube.tetracubeapp.login.LoginScreen
 import red.tetracube.tetracubeapp.login.LoginScreenRoute
@@ -13,6 +16,7 @@ import red.tetracube.tetracubeapp.registration.RegistrationScreenRoute
 import red.tetracube.tetracubeapp.splash.SplashScreen
 import red.tetracube.tetracubeapp.splash.SplashScreenRoute
 
+@ExperimentalGetImage
 @Composable
 fun TetraCubeAppNavigationHost(
     modifier: Modifier,
@@ -37,6 +41,9 @@ fun TetraCubeAppNavigationHost(
         }
         composable(route = LoginScreenRoute.route) {
             LoginScreen(navHostController = navHostController)
+        }
+        composable(route = CameraQRScannerScreenRoute.route) {
+            CameraQRScannerScreen(navHostController = navHostController)
         }
         //composable(route = SmartHomeScreen.route) {
         //    Text(text = "hello")

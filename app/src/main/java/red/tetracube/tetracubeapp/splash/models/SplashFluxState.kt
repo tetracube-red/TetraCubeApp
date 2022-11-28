@@ -9,6 +9,5 @@ enum class SplashFluxState (val resourceId: Int) {
     ERROR(R.string.error),
     MISSING_CONFIGURATION(R.string.missing_configuration),
     LOGGING_IN(R.string.logging_in),
-    GETTING_TETRACUBE_METADATA(R.string.getting_tetracube_metadata),
-    MISSING_HOSTS(R.string.missing_hosts)
+    GETTING_TETRACUBE_METADATA(R.string.getting_tetracube_metadata)
 }
