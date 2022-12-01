@@ -35,6 +35,7 @@ fun CameraQRScannerScreen(navHostController: NavHostController) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val cameraPermissionState = rememberPermissionState(permission = Manifest.permission.CAMERA)
+
     LaunchedEffect(
         key1 = true,
         block = {
@@ -60,7 +61,6 @@ fun CameraQRScannerView(
     onQRCodeScanned: (String) -> Unit,
     lifecycleOwner: LifecycleOwner
 ) {
-    var preview by remember { mutableStateOf<Preview?>(null) }
 
     AndroidView(
         factory = { AndroidViewContext ->
@@ -86,7 +86,7 @@ fun CameraQRScannerView(
 
             cameraProviderFuture.addListener(
                 {
-                    preview = Preview.Builder().build().also {
+                    val preview = Preview.Builder().build().also {
                         it.setSurfaceProvider(previewView.surfaceProvider)
                     }
                     val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()

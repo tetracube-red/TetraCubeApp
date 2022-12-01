@@ -9,7 +9,6 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.serialization.jackson.*
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import red.tetracube.tetracubeapp.core.definitions.ServiceCallStatus
 import red.tetracube.tetracubeapp.core.extensions.apiAddress
@@ -30,20 +29,17 @@ class AccountResources {
         }
     }
 
-    /*  var serviceCallStatus by mutableStateOf(ServiceCallStatus.IDLE)
-          private set*/
     val serviceCallStatus =  MutableSharedFlow<ServiceCallStatus>()
 
     suspend fun accountRegistration(
         username: String,
         password: String,
-        apiServiceAddress: String,
-        invitationCode: String
+        apiServiceAddress: String
     ) {
         serviceCallStatus.emit(ServiceCallStatus.IDLE)
         serviceCallStatus.emit(ServiceCallStatus.CONNECTING)
 
-        val enrollmentRequest = RegistrationRequest(username, password, invitationCode)
+        val enrollmentRequest = RegistrationRequest(username, password)
         val requestUrl = "${apiServiceAddress.apiAddress()}/account/registration"
         try {
             val response: HttpResponse = client.post(requestUrl) {
