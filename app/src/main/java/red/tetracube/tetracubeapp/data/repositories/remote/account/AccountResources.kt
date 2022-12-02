@@ -33,14 +33,15 @@ class AccountResources {
 
     suspend fun accountRegistration(
         username: String,
-        password: String,
+        authenticationToken: String,
+        houseName: String,
         apiServiceAddress: String
     ) {
         serviceCallStatus.emit(ServiceCallStatus.IDLE)
         serviceCallStatus.emit(ServiceCallStatus.CONNECTING)
 
-        val enrollmentRequest = RegistrationRequest(username, password)
-        val requestUrl = "${apiServiceAddress.apiAddress()}/account/registration"
+        val enrollmentRequest = RegistrationRequest(username, authenticationToken, houseName)
+        val requestUrl = "${apiServiceAddress.apiAddress()}/accounts"
         try {
             val response: HttpResponse = client.post(requestUrl) {
                 contentType(ContentType.Application.Json)
@@ -58,7 +59,11 @@ class AccountResources {
                     return
                 }
                 HttpStatusCode.BadRequest -> {
-                    serviceCallStatus.emit(ServiceCallStatus.FINISHED_ERROR_BAD_REQUEST)
+                    serviceCallStatus.emit(ServiceCallStatus.FINISHED_INVALID_TOKEN)
+                    return
+                }
+                HttpStatusCode.Conflict -> {
+                    serviceCallStatus.emit(ServiceCallStatus.FINISHED_CONFLICTING)
                     return
                 }
                 HttpStatusCode.Forbidden, HttpStatusCode.Unauthorized -> {

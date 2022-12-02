@@ -110,6 +110,19 @@ fun RegistrationScreenView(
                 onValueChange = { onFieldUpdate(FormDataFieldName.USERNAME, it) },
                 label = { Text(stringResource(id = FormDataFieldName.USERNAME.labelId)) }
             )
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                singleLine = true,
+                maxLines = 1,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next,
+                    autoCorrect = false
+                ),
+                modifier = Modifier.fillMaxWidth(),
+                value = registrationFormData.houseName ?: "",
+                onValueChange = { onFieldUpdate(FormDataFieldName.HOUSE_NAME, it) },
+                label = { Text(stringResource(id = FormDataFieldName.HOUSE_NAME.labelId)) }
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 

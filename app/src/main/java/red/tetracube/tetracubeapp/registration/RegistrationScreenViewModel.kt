@@ -31,6 +31,7 @@ class RegistrationScreenViewModel : ViewModel() {
         val updatedFormValue = when (field) {
             FormDataFieldName.USERNAME -> registrationFormData.copy(username = fieldValue)
             FormDataFieldName.PASSWORD -> registrationFormData.copy(password = fieldValue)
+            FormDataFieldName.HOUSE_NAME -> registrationFormData.copy(houseName = fieldValue)
             FormDataFieldName.TETRACUBE_HOST_ADDRESS -> registrationFormData.copy(
                 tetracubeHostAddress = fieldValue
             )
@@ -38,6 +39,7 @@ class RegistrationScreenViewModel : ViewModel() {
         val formIsValid = !updatedFormValue.username.isNullOrEmpty()
                 && !updatedFormValue.password.isNullOrEmpty()
                 && !updatedFormValue.tetracubeHostAddress.isNullOrEmpty()
+                && !updatedFormValue.houseName.isNullOrEmpty()
 
         registrationFormData = updatedFormValue.copy(isFormValid = formIsValid)
     }
@@ -60,6 +62,7 @@ class RegistrationScreenViewModel : ViewModel() {
         accountResources.accountRegistration(
             registrationFormData.username!!,
             registrationFormData.password!!,
+            registrationFormData.houseName!!,
             registrationFormData.tetracubeHostAddress!!
         )
     }

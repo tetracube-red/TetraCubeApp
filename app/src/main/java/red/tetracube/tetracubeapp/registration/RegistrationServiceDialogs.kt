@@ -75,11 +75,23 @@ fun RegistrationServiceDialogs(
                 }
             )
         }
-        ServiceCallStatus.FINISHED_ERROR_BAD_REQUEST -> {
+        ServiceCallStatus.FINISHED_INVALID_TOKEN -> {
             AlertDialogView(
                 iconId = R.drawable.round_highlight_off_24,
-                titleStringId = R.string.account_registration_invalid_request_error_title,
-                textStringId = R.string.account_registration_invalid_request_error_message,
+                titleStringId = R.string.account_registration_invalid_token_title,
+                textStringId = R.string.account_registration_invalid_token_message,
+                confirmStringId = R.string.registration_error_retry,
+                true,
+                onDismiss = {
+                    dialogDismissHandler(registrationServiceStatus)
+                }
+            )
+        }
+        ServiceCallStatus.FINISHED_CONFLICTING -> {
+            AlertDialogView(
+                iconId = R.drawable.round_highlight_off_24,
+                titleStringId = R.string.account_registration_conflicting_error_title,
+                textStringId = R.string.account_registration_conflicting_error_message,
                 confirmStringId = R.string.registration_error_retry,
                 true,
                 onDismiss = {

@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class RegistrationRequest @JsonCreator constructor(
-    @JsonProperty("name")
-    val name: String? = null,
+    @JsonProperty("username")
+    val username: String? = null,
 
-    @JsonProperty("password")
-    val password: String? = null,
+    @JsonProperty("authenticationToken")
+    val authenticationToken: String? = null,
 
-    @JsonProperty("invitation_code")
-    val invitationCode: String? = null,
+    @JsonProperty("houseName")
+    val houseName: String? = null,
 )

@@ -19,6 +19,7 @@
     <string name="password">Password</string>
     <string name="password_confirmation">Password confirmation</string>
     <string name="tetracube_host_address">Hostname</string>
+    <string name="house_name">House name</string>
     <string name="invitation_code">Invitation code</string>
     <string name="registration_prev_step">Previous</string>
     <string name="scan_qr_code">SCAN QR CODE</string>
@@ -34,8 +35,10 @@
     <string name="account_registration_unknown_error_message">Faced a generic error, check the TetraCube\'s service status</string>
     <string name="account_registration_timeout_error_title">TetraCube timeout</string>
     <string name="account_registration_timeout_error_message">Connection timeout while trying to connect to TetraCube host</string>
-    <string name="account_registration_not_found_error_title">Invitation code not found</string>
-    <string name="account_registration_not_found_error_message">Double check the invitation code entered</string>
-    <string name="account_registration_invalid_request_error_title">Invalid response</string>
-    <string name="account_registration_invalid_request_error_message">Check the host of the TetraCube inserted</string>
+    <string name="account_registration_not_found_error_title">Not Found</string>
+    <string name="account_registration_not_found_error_message">House or token not found</string>
+    <string name="account_registration_conflicting_error_title">Conflict</string>
+    <string name="account_registration_conflicting_error_message">Account already exists with same name</string>
+    <string name="account_registration_invalid_token_title">Invalid token</string>
+    <string name="account_registration_invalid_token_message">Token expired or already in use</string>
 </resources>
