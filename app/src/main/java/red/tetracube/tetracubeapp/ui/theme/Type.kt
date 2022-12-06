@@ -1,34 +1,22 @@
 package red.tetracube.tetracubeapp.ui.theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 
 // Set of Material typography styles to start with
 val Typography = Typography(
-        bodyLarge = TextStyle(
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.Normal,
-                fontSize = 16.sp,
-                lineHeight = 24.sp,
-                letterSpacing = 0.5.sp
-        )
-        /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
+    displayLarge = TypographyTokens.DisplayLarge,
+    displayMedium = TypographyTokens.DisplayMedium,
+    displaySmall = TypographyTokens.DisplaySmall,
+    headlineLarge = TypographyTokens.HeadlineLarge,
+    headlineMedium = TypographyTokens.HeadlineMedium,
+    headlineSmall = TypographyTokens.HeadlineSmall,
+    titleLarge = TypographyTokens.TitleLarge,
+    titleMedium = TypographyTokens.TitleMedium,
+    titleSmall = TypographyTokens.TitleSmall,
+    bodyLarge = TypographyTokens.BodyLarge,
+    bodyMedium = TypographyTokens.BodyMedium,
+    bodySmall = TypographyTokens.BodySmall,
+    labelLarge = TypographyTokens.LabelLarge,
+    labelMedium = TypographyTokens.LabelMedium,
+    labelSmall = TypographyTokens.LabelSmall,
 )

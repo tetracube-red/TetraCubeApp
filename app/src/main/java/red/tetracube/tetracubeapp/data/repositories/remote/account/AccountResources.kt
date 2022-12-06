@@ -33,14 +33,13 @@ class AccountResources {
 
     suspend fun accountRegistration(
         username: String,
-        authenticationToken: String,
-        houseName: String,
+        authenticationCode: String,
         apiServiceAddress: String
     ) {
         serviceCallStatus.emit(ServiceCallStatus.IDLE)
         serviceCallStatus.emit(ServiceCallStatus.CONNECTING)
 
-        val enrollmentRequest = RegistrationRequest(username, authenticationToken, houseName)
+        val enrollmentRequest = RegistrationRequest(username, authenticationCode)
         val requestUrl = "${apiServiceAddress.apiAddress()}/accounts"
         try {
             val response: HttpResponse = client.post(requestUrl) {

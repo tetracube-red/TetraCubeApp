@@ -16,8 +16,7 @@
 
     <!-- Registration screen -->
     <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="password_confirmation">Password confirmation</string>
+    <string name="authentication_code">AuthenticationCode</string>
     <string name="tetracube_host_address">Hostname</string>
     <string name="house_name">House name</string>
     <string name="invitation_code">Invitation code</string>

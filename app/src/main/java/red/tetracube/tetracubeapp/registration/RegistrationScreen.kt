@@ -1,6 +1,7 @@
 package red.tetracube.tetracubeapp.registration
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -8,6 +9,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -32,19 +35,7 @@ fun RegistrationScreen(
     val registrationFormData = registrationScreenViewModel.registrationFormData
     val registrationServiceStatus = registrationScreenViewModel.serviceCallStatus
     val coroutineScope = rememberCoroutineScope()
-
-    val secondScreenResult = navHostController.currentBackStackEntry
-        ?.savedStateHandle
-        ?.getStateFlow("scanned_data", "")
-
-    LaunchedEffect(
-        key1 = secondScreenResult,
-        block = {
-            if (secondScreenResult != null && secondScreenResult.value != "") {
-                registrationScreenViewModel.updateFormFieldFromQRCode(secondScreenResult.value)
-            }
-        }
-    )
+    val focusManager = LocalFocusManager.current
 
     RegistrationScreenView(
         registrationFormData = registrationFormData,
@@ -56,15 +47,15 @@ fun RegistrationScreen(
                 registrationScreenViewModel.onRegistrationButtonClickHandler()
             }
         },
-        onScanQRCodeButtonTap = {
-            navHostController.navigate("qr-scanner")
-        },
         dialogDismissHandler = {
             if (it == ServiceCallStatus.FINISHED_SUCCESS) {
                 navHostController.popBackStack()
             } else {
                 registrationScreenViewModel.resetConnectionStatus()
             }
+        },
+        onOutsideTap = {
+            focusManager.clearFocus()
         }
     )
 }
@@ -77,8 +68,8 @@ fun RegistrationScreenView(
     onFieldUpdate: (FormDataFieldName, String) -> Unit,
     onTrailingIconClicked: (FormDataFieldName) -> Unit,
     onRegistrationButtonClicked: () -> Unit,
-    onScanQRCodeButtonTap: () -> Unit,
     dialogDismissHandler: (ServiceCallStatus) -> Unit,
+    onOutsideTap: () -> Unit
 ) {
     val passwordTrailingIcon = if (registrationFormData.passwordHidden) {
         R.drawable.round_visibility_24
@@ -91,8 +82,12 @@ fun RegistrationScreenView(
     Column(
         modifier = Modifier
             .padding(16.dp)
-            .fillMaxWidth()
-            .fillMaxHeight(),
+            .fillMaxSize()
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    onOutsideTap()
+                })
+            },
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
@@ -110,19 +105,6 @@ fun RegistrationScreenView(
                 onValueChange = { onFieldUpdate(FormDataFieldName.USERNAME, it) },
                 label = { Text(stringResource(id = FormDataFieldName.USERNAME.labelId)) }
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                singleLine = true,
-                maxLines = 1,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next,
-                    autoCorrect = false
-                ),
-                modifier = Modifier.fillMaxWidth(),
-                value = registrationFormData.houseName ?: "",
-                onValueChange = { onFieldUpdate(FormDataFieldName.HOUSE_NAME, it) },
-                label = { Text(stringResource(id = FormDataFieldName.HOUSE_NAME.labelId)) }
-            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -134,12 +116,12 @@ fun RegistrationScreenView(
                     autoCorrect = false
                 ),
                 modifier = Modifier.fillMaxWidth(),
-                value = registrationFormData.password ?: "",
-                onValueChange = { onFieldUpdate(FormDataFieldName.PASSWORD, it) },
-                label = { Text(stringResource(FormDataFieldName.PASSWORD.labelId)) },
+                value = registrationFormData.authenticationCode ?: "",
+                onValueChange = { onFieldUpdate(FormDataFieldName.AUTHENTICATION_CODE, it) },
+                label = { Text(stringResource(FormDataFieldName.AUTHENTICATION_CODE.labelId)) },
                 trailingIcon = {
                     IconButton(
-                        onClick = { onTrailingIconClicked(FormDataFieldName.PASSWORD) },
+                        onClick = { onTrailingIconClicked(FormDataFieldName.AUTHENTICATION_CODE) },
                     ) {
                         Icon(
                             painter = painterResource(id = passwordTrailingIcon),
@@ -173,24 +155,6 @@ fun RegistrationScreenView(
                 },
                 label = { Text(stringResource(FormDataFieldName.TETRACUBE_HOST_ADDRESS.labelId)) }
             )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            OutlinedButton(
-                modifier = Modifier
-                    .padding(horizontal = 8.dp),
-                shape = RoundedCornerShape(10),
-                onClick = { onScanQRCodeButtonTap() }
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.round_qr_code_scanner_24),
-                        contentDescription = ""
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(text = stringResource(id = R.string.scan_qr_code))
-                }
-            }
         }
         Button(
             modifier = Modifier.fillMaxWidth(),

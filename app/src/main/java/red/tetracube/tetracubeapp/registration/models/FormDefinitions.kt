@@ -4,7 +4,6 @@ import red.tetracube.tetracubeapp.R
 
 enum class FormDataFieldName(val labelId: Int) {
     USERNAME(R.string.username),
-    PASSWORD(R.string.password),
-    TETRACUBE_HOST_ADDRESS(R.string.tetracube_host_address),
-    HOUSE_NAME(R.string.house_name)
+    AUTHENTICATION_CODE(R.string.authentication_code),
+    TETRACUBE_HOST_ADDRESS(R.string.tetracube_host_address)
 }

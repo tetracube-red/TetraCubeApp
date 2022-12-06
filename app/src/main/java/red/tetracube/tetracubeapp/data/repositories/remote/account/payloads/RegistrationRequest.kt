@@ -7,9 +7,6 @@ data class RegistrationRequest @JsonCreator constructor(
     @JsonProperty("username")
     val username: String? = null,
 
-    @JsonProperty("authenticationToken")
-    val authenticationToken: String? = null,
-
-    @JsonProperty("houseName")
-    val houseName: String? = null,
+    @JsonProperty("authenticationCode")
+    val authenticationCode: String? = null,
 )

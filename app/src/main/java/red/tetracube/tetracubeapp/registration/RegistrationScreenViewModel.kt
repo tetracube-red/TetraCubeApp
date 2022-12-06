@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import red.tetracube.tetracubeapp.core.definitions.ServiceCallStatus
 import red.tetracube.tetracubeapp.data.repositories.remote.account.AccountResources
 import red.tetracube.tetracubeapp.registration.models.FormDataFieldName
@@ -21,32 +20,24 @@ class RegistrationScreenViewModel : ViewModel() {
 
     private val accountResources = AccountResources()
 
-    fun updateFormFieldFromQRCode(qrCodeValue: String) {
-        val json = JSONObject(qrCodeValue)
-        updateFormFieldValue(FormDataFieldName.TETRACUBE_HOST_ADDRESS, json["host"].toString())
-        updateFormFieldValue(FormDataFieldName.PASSWORD, json["token"].toString())
-    }
-
     fun updateFormFieldValue(field: FormDataFieldName, fieldValue: String?) {
         val updatedFormValue = when (field) {
             FormDataFieldName.USERNAME -> registrationFormData.copy(username = fieldValue)
-            FormDataFieldName.PASSWORD -> registrationFormData.copy(password = fieldValue)
-            FormDataFieldName.HOUSE_NAME -> registrationFormData.copy(houseName = fieldValue)
+            FormDataFieldName.AUTHENTICATION_CODE -> registrationFormData.copy(authenticationCode = fieldValue)
             FormDataFieldName.TETRACUBE_HOST_ADDRESS -> registrationFormData.copy(
                 tetracubeHostAddress = fieldValue
             )
         }
         val formIsValid = !updatedFormValue.username.isNullOrEmpty()
-                && !updatedFormValue.password.isNullOrEmpty()
+                && !updatedFormValue.authenticationCode.isNullOrEmpty()
                 && !updatedFormValue.tetracubeHostAddress.isNullOrEmpty()
-                && !updatedFormValue.houseName.isNullOrEmpty()
 
         registrationFormData = updatedFormValue.copy(isFormValid = formIsValid)
     }
 
     fun fieldTrailingIconClickHandler(field: FormDataFieldName) {
         val updateFieldStatus = when (field) {
-            FormDataFieldName.PASSWORD -> registrationFormData.copy(passwordHidden = !registrationFormData.passwordHidden)
+            FormDataFieldName.AUTHENTICATION_CODE -> registrationFormData.copy(passwordHidden = !registrationFormData.passwordHidden)
             else -> {
                 registrationFormData
             }
@@ -61,8 +52,7 @@ class RegistrationScreenViewModel : ViewModel() {
         }
         accountResources.accountRegistration(
             registrationFormData.username!!,
-            registrationFormData.password!!,
-            registrationFormData.houseName!!,
+            registrationFormData.authenticationCode!!,
             registrationFormData.tetracubeHostAddress!!
         )
     }

@@ -81,13 +81,13 @@ fun TetraCubeAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colorScheme = DarkColorScheme
+    val colorScheme = LightColorScheme
     val view = LocalView.current
     val window = (view.context as Activity).window
     if (!view.isInEditMode) {
         SideEffect {
             (view.context as Activity).window.statusBarColor = colorScheme.surface.toArgb()
-            getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+           // getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
 
