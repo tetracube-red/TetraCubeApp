@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import red.tetracube.tetracubeapp.core.settings.TetraCubeSettings
-import red.tetracube.tetracubeapp.login.LoginScreenRoute
 import red.tetracube.tetracubeapp.splash.models.SplashFluxState
+import red.tetracube.tetracubeapp.userlogin.UserLoginScreenRoute
 
 @Composable
 fun SplashScreen(
@@ -44,7 +44,7 @@ fun SplashScreen(
                 SplashFluxState.MISSING_CONFIGURATION,
                 SplashFluxState.LOGGING_IN,
                 SplashFluxState.ERROR -> {
-                    navHostController.navigate(LoginScreenRoute.route) {
+                    navHostController.navigate(UserLoginScreenRoute.route) {
                         popUpTo(0)
                     }
                 }

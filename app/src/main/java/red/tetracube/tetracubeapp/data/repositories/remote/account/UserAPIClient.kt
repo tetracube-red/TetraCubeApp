@@ -15,7 +15,7 @@ import red.tetracube.tetracubeapp.core.extensions.apiAddress
 import red.tetracube.tetracubeapp.data.repositories.remote.account.payloads.RegistrationRequest
 import java.net.ConnectException
 
-class AccountResources {
+class UserAPIClient {
 
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
@@ -31,7 +31,7 @@ class AccountResources {
 
     val serviceCallStatus =  MutableSharedFlow<ServiceCallStatus>()
 
-    suspend fun accountRegistration(
+    suspend fun userLogin(
         username: String,
         authenticationCode: String,
         apiServiceAddress: String
@@ -40,7 +40,7 @@ class AccountResources {
         serviceCallStatus.emit(ServiceCallStatus.CONNECTING)
 
         val enrollmentRequest = RegistrationRequest(username, authenticationCode)
-        val requestUrl = "${apiServiceAddress.apiAddress()}/accounts"
+        val requestUrl = "${apiServiceAddress.apiAddress()}/users/login"
         try {
             val response: HttpResponse = client.post(requestUrl) {
                 contentType(ContentType.Application.Json)

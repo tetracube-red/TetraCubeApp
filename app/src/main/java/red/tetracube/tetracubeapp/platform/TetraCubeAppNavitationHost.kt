@@ -6,10 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import red.tetracube.tetracubeapp.core.settings.TetraCubeSettings
-import red.tetracube.tetracubeapp.login.LoginScreen
-import red.tetracube.tetracubeapp.login.LoginScreenRoute
-import red.tetracube.tetracubeapp.registration.RegistrationScreen
-import red.tetracube.tetracubeapp.registration.RegistrationScreenRoute
+import red.tetracube.tetracubeapp.userlogin.UserLoginScreen
+import red.tetracube.tetracubeapp.userlogin.UserLoginScreenRoute
 import red.tetracube.tetracubeapp.splash.SplashScreen
 import red.tetracube.tetracubeapp.splash.SplashScreenRoute
 
@@ -30,13 +28,10 @@ fun TetraCubeAppNavigationHost(
                 navHostController = navHostController
             )
         }
-        composable(route = RegistrationScreenRoute.route) {
-            RegistrationScreen(
+        composable(route = UserLoginScreenRoute.route) {
+            UserLoginScreen(
                 navHostController = navHostController
             )
-        }
-        composable(route = LoginScreenRoute.route) {
-            LoginScreen(navHostController = navHostController)
         }
         //composable(route = SmartHomeScreen.route) {
         //    Text(text = "hello")

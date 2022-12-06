@@ -1,4 +1,4 @@
-package red.tetracube.tetracubeapp.registration
+package red.tetracube.tetracubeapp.userlogin
 
 import androidx.compose.runtime.Composable
 import red.tetracube.tetracubeapp.R

@@ -1,9 +1,8 @@
-package red.tetracube.tetracubeapp.registration
+package red.tetracube.tetracubeapp.userlogin
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -24,15 +23,16 @@ import io.ktor.client.request.forms.*
 import kotlinx.coroutines.launch
 import red.tetracube.tetracubeapp.R
 import red.tetracube.tetracubeapp.core.definitions.ServiceCallStatus
-import red.tetracube.tetracubeapp.registration.models.FormDataFieldName
-import red.tetracube.tetracubeapp.registration.models.RegistrationFormData
+import red.tetracube.tetracubeapp.userlogin.models.LoginFormData
+import red.tetracube.tetracubeapp.splash.SplashScreenRoute
+import red.tetracube.tetracubeapp.userlogin.models.FormFieldName
 
 @Composable
-fun RegistrationScreen(
+fun UserLoginScreen(
     navHostController: NavHostController,
-    registrationScreenViewModel: RegistrationScreenViewModel = viewModel()
+    registrationScreenViewModel: UserLoginViewModel = viewModel()
 ) {
-    val registrationFormData = registrationScreenViewModel.registrationFormData
+    val registrationFormData = registrationScreenViewModel.userLoginFormData
     val registrationServiceStatus = registrationScreenViewModel.serviceCallStatus
     val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
@@ -44,12 +44,14 @@ fun RegistrationScreen(
         onTrailingIconClicked = registrationScreenViewModel::fieldTrailingIconClickHandler,
         onRegistrationButtonClicked = {
             coroutineScope.launch {
-                registrationScreenViewModel.onRegistrationButtonClickHandler()
+                registrationScreenViewModel.onLoginButtonTapHandler()
             }
         },
         dialogDismissHandler = {
             if (it == ServiceCallStatus.FINISHED_SUCCESS) {
-                navHostController.popBackStack()
+                navHostController.navigate(SplashScreenRoute.route) {
+                    popUpTo(0)
+                }
             } else {
                 registrationScreenViewModel.resetConnectionStatus()
             }
@@ -63,15 +65,15 @@ fun RegistrationScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrationScreenView(
-    registrationFormData: RegistrationFormData,
+    registrationFormData: LoginFormData,
     registrationServiceStatus: ServiceCallStatus,
-    onFieldUpdate: (FormDataFieldName, String) -> Unit,
-    onTrailingIconClicked: (FormDataFieldName) -> Unit,
+    onFieldUpdate: (FormFieldName, String) -> Unit,
+    onTrailingIconClicked: (FormFieldName) -> Unit,
     onRegistrationButtonClicked: () -> Unit,
     dialogDismissHandler: (ServiceCallStatus) -> Unit,
     onOutsideTap: () -> Unit
 ) {
-    val passwordTrailingIcon = if (registrationFormData.passwordHidden) {
+    val authenticationCodeTrailingIcon = if (registrationFormData.isCodeHidden) {
         R.drawable.round_visibility_24
     } else {
         R.drawable.round_visibility_off_24
@@ -102,8 +104,8 @@ fun RegistrationScreenView(
                 ),
                 modifier = Modifier.fillMaxWidth(),
                 value = registrationFormData.username ?: "",
-                onValueChange = { onFieldUpdate(FormDataFieldName.USERNAME, it) },
-                label = { Text(stringResource(id = FormDataFieldName.USERNAME.labelId)) }
+                onValueChange = { onFieldUpdate(FormFieldName.USERNAME, it) },
+                label = { Text(stringResource(id = FormFieldName.USERNAME.labelId)) }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -117,19 +119,19 @@ fun RegistrationScreenView(
                 ),
                 modifier = Modifier.fillMaxWidth(),
                 value = registrationFormData.authenticationCode ?: "",
-                onValueChange = { onFieldUpdate(FormDataFieldName.AUTHENTICATION_CODE, it) },
-                label = { Text(stringResource(FormDataFieldName.AUTHENTICATION_CODE.labelId)) },
+                onValueChange = { onFieldUpdate(FormFieldName.AUTHENTICATION_CODE, it) },
+                label = { Text(stringResource(FormFieldName.AUTHENTICATION_CODE.labelId)) },
                 trailingIcon = {
                     IconButton(
-                        onClick = { onTrailingIconClicked(FormDataFieldName.AUTHENTICATION_CODE) },
+                        onClick = { onTrailingIconClicked(FormFieldName.AUTHENTICATION_CODE) },
                     ) {
                         Icon(
-                            painter = painterResource(id = passwordTrailingIcon),
+                            painter = painterResource(id = authenticationCodeTrailingIcon),
                             contentDescription = ""
                         )
                     }
                 },
-                visualTransformation = if (registrationFormData.passwordHidden)
+                visualTransformation = if (registrationFormData.isCodeHidden)
                     PasswordVisualTransformation()
                 else
                     VisualTransformation.None
@@ -149,11 +151,11 @@ fun RegistrationScreenView(
                 value = registrationFormData.tetracubeHostAddress ?: "",
                 onValueChange = {
                     onFieldUpdate(
-                        FormDataFieldName.TETRACUBE_HOST_ADDRESS,
+                        FormFieldName.TETRACUBE_HOST_ADDRESS,
                         it
                     )
                 },
-                label = { Text(stringResource(FormDataFieldName.TETRACUBE_HOST_ADDRESS.labelId)) }
+                label = { Text(stringResource(FormFieldName.TETRACUBE_HOST_ADDRESS.labelId)) }
             )
         }
         Button(
@@ -161,7 +163,7 @@ fun RegistrationScreenView(
             enabled = registrationFormData.isFormValid,
             onClick = { onRegistrationButtonClicked() }
         ) {
-            Text(stringResource(R.string.start_registration))
+            Text(stringResource(R.string.do_user_login))
         }
     }
 }
