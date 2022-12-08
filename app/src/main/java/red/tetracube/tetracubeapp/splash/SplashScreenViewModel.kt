@@ -32,7 +32,7 @@ class SplashScreenViewModel : ViewModel() {
         val tetracube = applicationSettings.pairedTetracubesOrBuilderList
             .firstOrNull { it.isDefault }
             ?: applicationSettings.pairedTetracubesList.first()
-        val hostname = tetracube.tetracubeApiHost
+        val hostname = tetracube.host
         var authenticationToken = tetracube.authenticationToken
 
         /*   TetracubeResources(appSettings.tetracubeVertexApiHost, appSettings.authenticationToken)

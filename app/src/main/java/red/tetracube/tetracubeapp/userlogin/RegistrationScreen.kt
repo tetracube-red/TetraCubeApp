@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -36,6 +37,7 @@ fun UserLoginScreen(
     val registrationServiceStatus = registrationScreenViewModel.serviceCallStatus
     val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
 
     RegistrationScreenView(
         registrationFormData = registrationFormData,
@@ -44,7 +46,7 @@ fun UserLoginScreen(
         onTrailingIconClicked = registrationScreenViewModel::fieldTrailingIconClickHandler,
         onRegistrationButtonClicked = {
             coroutineScope.launch {
-                registrationScreenViewModel.onLoginButtonTapHandler()
+                registrationScreenViewModel.onLoginButtonTapHandler(context)
             }
         },
         dialogDismissHandler = {

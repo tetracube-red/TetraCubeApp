@@ -5,12 +5,18 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.UUID
 
 data class UserLoginResponse @JsonCreator constructor(
-    @JsonProperty("userId")
+    @JsonProperty("id")
     val userId: UUID,
 
-    @JsonProperty("username")
+    @JsonProperty("name")
     val username: String,
 
-    @JsonProperty("authenticationToken")
-    val authenticationToken: String
+    @JsonProperty("token")
+    val authenticationToken: String,
+
+    @JsonProperty("houseId")
+    val houseId: UUID,
+
+    @JsonProperty("houseName")
+    val houseName: String
 )

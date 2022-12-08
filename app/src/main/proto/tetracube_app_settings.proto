@@ -11,11 +11,9 @@ message TetraCubeSettings {
 message PairedTetraCube {
   bool is_default = 1;
   string authentication_token = 2;
-  string refresh_token = 3;
-  string tetracube_api_host = 4;
-  string tetracube_realtime_host = 5;
-  string account_name = 6;
-  string account_id = 7;
-  string hub_id = 8;
-  string hub_name = 9;
+  string host = 4;
+  string account_name = 5;
+  string account_id = 6;
+  string house_id = 7;
+  string house_name = 8;
 }
