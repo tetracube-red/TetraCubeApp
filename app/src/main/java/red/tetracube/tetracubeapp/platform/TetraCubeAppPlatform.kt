@@ -16,7 +16,9 @@ import red.tetracube.tetracubeapp.R
 import red.tetracube.tetracubeapp.core.routing.ScreenRoute
 import red.tetracube.tetracubeapp.core.routing.tetracubeRedAppRoutes
 import red.tetracube.tetracubeapp.core.settings.TetraCubeSettings
+import red.tetracube.tetracubeapp.housedevicesmesh.HouseDevicesMeshRoute
 import red.tetracube.tetracubeapp.splash.SplashScreenRoute
+import red.tetracube.tetracubeapp.todo.ToDoRoute
 
 @Composable
 fun TetraCubeAppPlatform(tetraCubeAppPlatformViewModel: TetraCubeAppPlatformViewModel) {
@@ -72,6 +74,42 @@ fun TetraCubeAppPlatformView(
                 navHostController = navHostController,
                 applicationSettings = applicationSettings
             )
+        },
+        bottomBar = {
+            if (currentRoute.showBottomBar) {
+                NavigationBar {
+                    NavigationBarItem(
+                        icon = {
+                            Icon(
+                                painterResource(id = R.drawable.round_emoji_objects_24),
+                                contentDescription = stringResource(id = R.string.bottom_bar_house_devices_mesh)
+                            )
+                        },
+                        label = { Text(stringResource(id = R.string.bottom_bar_house_devices_mesh)) },
+                        selected = currentRoute is HouseDevicesMeshRoute,
+                        onClick = {
+                            navHostController.navigate(HouseDevicesMeshRoute.route) {
+                                popUpTo(0)
+                            }
+                        }
+                    )
+                    NavigationBarItem(
+                        icon = {
+                            Icon(
+                                painterResource(id = R.drawable.round_checklist_24),
+                                contentDescription = stringResource(id = R.string.bottom_bar_todo)
+                            )
+                        },
+                        label = { Text(stringResource(id = R.string.bottom_bar_todo)) },
+                        selected = currentRoute is ToDoRoute,
+                        onClick = {
+                            navHostController.navigate(ToDoRoute.route) {
+                                popUpTo(0)
+                            }
+                        }
+                    )
+                }
+            }
         }
     )
 }

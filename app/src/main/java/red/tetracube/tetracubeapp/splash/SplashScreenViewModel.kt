@@ -29,21 +29,13 @@ class SplashScreenViewModel : ViewModel() {
         updateSplashFluxState(SplashFluxState.GETTING_TETRACUBE_METADATA)
         delay(200)
 
-        val tetracube = applicationSettings.pairedTetracubesOrBuilderList
-            .firstOrNull { it.isDefault }
+        val tetracube = applicationSettings.pairedTetracubesList.firstOrNull { it.isDefault }
             ?: applicationSettings.pairedTetracubesList.first()
-        val hostname = tetracube.host
-        var authenticationToken = tetracube.authenticationToken
-
-        /*   TetracubeResources(appSettings.tetracubeVertexApiHost, appSettings.authenticationToken)
-               .getTetracubeMetadata { state, response ->
-                   updateServiceConnectionStatus(
-                       state,
-                       context,
-                       response
-                   )
-               }*/
-        //      updateSplashFluxState(SplashFluxState.SUCCESS)
+        if (tetracube == null) {
+            updateSplashFluxState(SplashFluxState.MISSING_CONFIGURATION)
+            return
+        }
+        updateSplashFluxState(SplashFluxState.SUCCESS)
     }
 
     private fun updateSplashFluxState(splashFluxState: SplashFluxState) {

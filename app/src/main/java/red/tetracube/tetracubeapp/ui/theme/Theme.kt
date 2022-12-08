@@ -87,7 +87,7 @@ fun TetraCubeAppTheme(
     if (!view.isInEditMode) {
         SideEffect {
             (view.context as Activity).window.statusBarColor = colorScheme.surface.toArgb()
-           // getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
 

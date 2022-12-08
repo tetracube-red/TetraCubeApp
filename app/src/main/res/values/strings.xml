@@ -32,4 +32,8 @@
     <string name="account_registration_conflicting_error_message">Account already exists with same name</string>
     <string name="account_registration_invalid_token_title">Invalid token</string>
     <string name="account_registration_invalid_token_message">Token expired or already in use</string>
+
+    <!-- Bottom bar -->
+    <string name="bottom_bar_house_devices_mesh">Devices Mesh</string>
+    <string name="bottom_bar_todo">ToDo</string>
 </resources>

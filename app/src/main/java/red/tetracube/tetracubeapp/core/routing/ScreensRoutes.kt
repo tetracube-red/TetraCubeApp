@@ -1,7 +1,9 @@
 package red.tetracube.tetracubeapp.core.routing
 
+import red.tetracube.tetracubeapp.housedevicesmesh.HouseDevicesMeshRoute
 import red.tetracube.tetracubeapp.userlogin.UserLoginScreenRoute
 import red.tetracube.tetracubeapp.splash.SplashScreenRoute
+import red.tetracube.tetracubeapp.todo.ToDoRoute
 
 interface ScreenRoute {
     val route: String
@@ -12,6 +14,7 @@ interface ScreenRoute {
 
 val tetracubeRedAppRoutes = listOf(
     SplashScreenRoute,
-    UserLoginScreenRoute
-    //  SmartHomeScreen
+    UserLoginScreenRoute,
+    HouseDevicesMeshRoute,
+    ToDoRoute
 )
