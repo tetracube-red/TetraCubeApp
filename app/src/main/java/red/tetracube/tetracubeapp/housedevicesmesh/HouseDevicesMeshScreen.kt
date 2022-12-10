@@ -3,24 +3,25 @@ package red.tetracube.tetracubeapp.housedevicesmesh
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.PullRefreshState
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -74,7 +75,7 @@ fun HouseDevicesMeshScreen(
     )
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun HouseDevicesMeshView(
     houseName: String,
@@ -91,12 +92,15 @@ fun HouseDevicesMeshView(
             modifier = Modifier.padding(16.dp)
         )
 
-        Box(modifier = Modifier.pullRefresh(refreshState).fillMaxWidth().fillMaxHeight()) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
+        Box(
+            modifier = Modifier
+                .pullRefresh(refreshState)
+                .fillMaxWidth()
+                .fillMaxHeight()
+        ) {
+            LazyColumn(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 if (serviceCallStatus != ServiceCallStatus.CONNECTING
                     && serviceCallStatus != ServiceCallStatus.FINISHED_SUCCESS
@@ -115,45 +119,38 @@ fun HouseDevicesMeshView(
                     }
                 }
                 items(devices) { device ->
-                    ElevatedCard {
-                        Box(
-                            modifier = Modifier
-                                .background(color = device.colorCode.color)
-                                .fillMaxWidth()
-                                .wrapContentHeight(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Image(
-                                painter = painterResource(id = device.deviceTypeIcon),
-                                contentDescription = null,
-                                contentScale = ContentScale.FillHeight,
+                    ListItem(
+                        headlineText = { Text(device.name) },
+                        supportingText = { Text("@ ${device.environment.name}") },
+                        overlineText = {
+                                       Row(verticalAlignment = Alignment.CenterVertically) {
+                                           Box(
+                                               modifier = Modifier
+                                                   .size(size = 10.dp)
+                                                   .clip(shape = CircleShape)
+                                                   .background(color = device.connectionStatusColor),
+                                               contentAlignment = Alignment.Center,
+                                           ) {                                           }
+                                           Spacer(Modifier.width(4.dp))
+                                           Text(text = if (device.isOnline) "is online" else "is offline")
+                                       }
+                        },
+                        leadingContent = {
+                            Box(
                                 modifier = Modifier
-                                    .padding(vertical = 8.dp)
-                                    .height(48.dp),
-                            )
+                                    .size(size = 50.dp)
+                                    .clip(shape = RoundedCornerShape(size = 12.dp))
+                                    .background(color = device.colorCode.color),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                 Image(
+                                     painter = painterResource(id = device.deviceTypeIcon),
+                                     contentDescription = null,
+                                 )
+                            }
                         }
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(4.dp)
-                                .background(color = device.connectionStatusColor),
-                        )
-                        Column(
-                            modifier = Modifier.padding(8.dp),
-                        ) {
-                            Text(text = device.name, style = MaterialTheme.typography.titleMedium)
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = "@ ${device.environment.name}",
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = "Last update: 29/44 at 11:44",
-                                style = MaterialTheme.typography.labelMedium
-                            )
-                        }
-                    }
+                    )
+                    Divider()
                 }
             }
 
