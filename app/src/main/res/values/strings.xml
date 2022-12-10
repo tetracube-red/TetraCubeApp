@@ -36,4 +36,7 @@
     <!-- Bottom bar -->
     <string name="bottom_bar_house_devices_mesh">Devices Mesh</string>
     <string name="bottom_bar_todo">ToDo</string>
+
+    <!-- House devices mesh screen -->
+    <string name="devices_error_loading">Cannot load devices, try to refresh</string>
 </resources>

@@ -31,12 +31,17 @@ class HouseDevicesMeshViewModel : ViewModel() {
         viewModelScope.launch {
             houseDevicesMeshAPIClient.serviceCallStatus
                 .collect {
-                    if (it == ServiceCallStatus.CONNECTING) {
-                        refreshing = true
-                    } else if (it == ServiceCallStatus.FINISHED_SUCCESS || it == ServiceCallStatus.IDLE) {
-                        refreshing = false
-                    } else {
-                        serviceCallStatus = it
+                    when (it) {
+                        ServiceCallStatus.CONNECTING -> {
+                            refreshing = true
+                        }
+                       /* ServiceCallStatus.FINISHED_SUCCESS, ServiceCallStatus.IDLE -> {
+                            refreshing = false
+                        }*/
+                        else -> {
+                            serviceCallStatus = it
+                            refreshing = false
+                        }
                     }
                 }
         }

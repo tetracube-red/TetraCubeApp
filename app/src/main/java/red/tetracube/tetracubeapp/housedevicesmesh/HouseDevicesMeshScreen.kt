@@ -11,6 +11,7 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.PullRefreshState
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
@@ -28,6 +30,7 @@ import red.tetracube.tetracubeapp.core.definitions.ServiceCallStatus
 import red.tetracube.tetracubeapp.core.extensions.color
 import red.tetracube.tetracubeapp.core.settings.PairedTetraCube
 import red.tetracube.tetracubeapp.housedevicesmesh.models.Device
+import red.tetracube.tetracubeapp.R
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -80,6 +83,7 @@ fun HouseDevicesMeshView(
     refreshing: Boolean,
     refreshState: PullRefreshState
 ) {
+
     Column() {
         Text(
             houseName,
@@ -87,13 +91,29 @@ fun HouseDevicesMeshView(
             modifier = Modifier.padding(16.dp)
         )
 
-        Box( modifier = Modifier.pullRefresh(refreshState)) {
+        Box(modifier = Modifier.pullRefresh(refreshState).fillMaxWidth().fillMaxHeight()) {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+                if (serviceCallStatus != ServiceCallStatus.CONNECTING
+                    && serviceCallStatus != ServiceCallStatus.FINISHED_SUCCESS
+                    && serviceCallStatus != ServiceCallStatus.IDLE
+                ) {
+                    item {
+                        ElevatedCard(
+                            colors = CardDefaults.elevatedCardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
+                        ) {
+                            Text(
+                                stringResource(id = R.string.devices_error_loading),
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.padding(16.dp)
+                            )
+                        }
+                    }
+                }
                 items(devices) { device ->
                     ElevatedCard {
                         Box(
@@ -140,7 +160,8 @@ fun HouseDevicesMeshView(
             PullRefreshIndicator(
                 refreshing,
                 refreshState,
-                modifier = Modifier.align(Alignment.TopCenter)
+                modifier = Modifier.align(Alignment.TopCenter),
+                contentColor = MaterialTheme.colorScheme.primary
             )
         }
     }
