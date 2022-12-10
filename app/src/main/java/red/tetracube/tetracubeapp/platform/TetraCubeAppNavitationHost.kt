@@ -8,11 +8,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import red.tetracube.tetracubeapp.core.settings.TetraCubeSettings
 import red.tetracube.tetracubeapp.housedevicesmesh.HouseDevicesMeshRoute
-import red.tetracube.tetracubeapp.userlogin.UserLoginScreen
-import red.tetracube.tetracubeapp.userlogin.UserLoginScreenRoute
+import red.tetracube.tetracubeapp.housedevicesmesh.HouseDevicesMeshScreen
 import red.tetracube.tetracubeapp.splash.SplashScreen
 import red.tetracube.tetracubeapp.splash.SplashScreenRoute
 import red.tetracube.tetracubeapp.todo.ToDoRoute
+import red.tetracube.tetracubeapp.userlogin.UserLoginScreen
+import red.tetracube.tetracubeapp.userlogin.UserLoginScreenRoute
 
 @Composable
 fun TetraCubeAppNavigationHost(
@@ -37,7 +38,11 @@ fun TetraCubeAppNavigationHost(
             )
         }
         composable(route = HouseDevicesMeshRoute.route) {
-            Text("FeaturesMesh")
+            val tetraCube = applicationSettings.pairedTetracubesList.find { t -> t.isDefault }
+                ?: applicationSettings.pairedTetracubesList.first()
+            HouseDevicesMeshScreen(
+                tetraCube = tetraCube,
+            )
         }
         composable(route = ToDoRoute.route) {
             Text("ToDo")
