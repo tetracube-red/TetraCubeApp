@@ -16,16 +16,29 @@ class HouseDevicesMeshViewModel : ViewModel() {
 
     var serviceCallStatus by mutableStateOf(ServiceCallStatus.IDLE)
         private set
+    var houseName by mutableStateOf("")
+        private set
     val devices = mutableStateListOf<Device>()
+    var refreshing by mutableStateOf(false)
+        private set
 
     suspend fun getHouseMeshDescription(tetraCube: PairedTetraCube) {
+        houseName = tetraCube.houseName
         val houseDevicesMeshAPIClient = HouseDevicesMeshAPIClient(
             tetraCube.host,
             tetraCube.authenticationToken
         )
         viewModelScope.launch {
             houseDevicesMeshAPIClient.serviceCallStatus
-                .collect { serviceCallStatus = it }
+                .collect {
+                    if (it == ServiceCallStatus.CONNECTING) {
+                        refreshing = true
+                    } else if (it == ServiceCallStatus.FINISHED_SUCCESS || it == ServiceCallStatus.IDLE) {
+                        refreshing = false
+                    } else {
+                        serviceCallStatus = it
+                    }
+                }
         }
         val getHouseMeshDescriptionResponse = houseDevicesMeshAPIClient.getHouseMeshDescription()
             ?: return
@@ -33,6 +46,7 @@ class HouseDevicesMeshViewModel : ViewModel() {
             ?.map { d -> Device(d) }
             ?.toMutableList()
         if (mappedDevices != null) {
+            devices.clear()
             devices.addAll(mappedDevices)
         }
     }

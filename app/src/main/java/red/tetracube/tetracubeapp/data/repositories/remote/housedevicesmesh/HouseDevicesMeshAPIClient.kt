@@ -12,6 +12,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.serialization.jackson.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import red.tetracube.tetracubeapp.core.definitions.ServiceCallStatus
 import red.tetracube.tetracubeapp.core.extensions.apiAddress
@@ -54,6 +55,7 @@ class HouseDevicesMeshAPIClient(
                 contentType(ContentType.Application.Json)
                 accept(ContentType.Application.Json)
             }
+            delay(200)
 
             if (response.contentType() != null && !response.contentType()!!.match(ContentType.Application.Json)) {
                 serviceCallStatus.emit(ServiceCallStatus.FINISHED_ERROR_NOT_FOUND)
