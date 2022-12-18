@@ -19,19 +19,16 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
+import red.tetracube.tetracubeapp.R
 import red.tetracube.tetracubeapp.core.definitions.ServiceCallStatus
 import red.tetracube.tetracubeapp.core.extensions.color
 import red.tetracube.tetracubeapp.core.settings.PairedTetraCube
 import red.tetracube.tetracubeapp.housedevicesmesh.models.Device
-import red.tetracube.tetracubeapp.R
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -148,6 +145,9 @@ fun HouseDevicesMeshView(
                                      contentDescription = null,
                                  )
                             }
+                        },
+                        trailingContent = {
+                            DeviceItemTrailingWidget(device = device)
                         }
                     )
                     Divider()
