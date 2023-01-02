@@ -1,4 +1,4 @@
-package red.tetracube.tetracubeapp.data.repositories.remote.housedevicesmesh.payloads
+package red.tetracube.tetracubeapp.data.repositories.remote.smarthome.payloads
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty

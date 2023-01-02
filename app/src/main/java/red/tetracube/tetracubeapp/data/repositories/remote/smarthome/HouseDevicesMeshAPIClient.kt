@@ -1,4 +1,4 @@
-package red.tetracube.tetracubeapp.data.repositories.remote.housedevicesmesh
+package red.tetracube.tetracubeapp.data.repositories.remote.smarthome
 
 import android.util.Log
 import io.ktor.client.*
@@ -16,7 +16,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import red.tetracube.tetracubeapp.core.definitions.ServiceCallStatus
 import red.tetracube.tetracubeapp.core.extensions.apiAddress
-import red.tetracube.tetracubeapp.data.repositories.remote.housedevicesmesh.payloads.GetHouseMeshDescriptionResponse
+import red.tetracube.tetracubeapp.data.repositories.remote.smarthome.payloads.GetHouseMeshDescriptionResponse
 import java.net.ConnectException
 
 class HouseDevicesMeshAPIClient(

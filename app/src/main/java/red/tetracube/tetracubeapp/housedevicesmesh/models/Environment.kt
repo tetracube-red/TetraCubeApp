@@ -1,7 +1,7 @@
 package red.tetracube.tetracubeapp.housedevicesmesh.models
 
-import red.tetracube.tetracubeapp.data.repositories.remote.housedevicesmesh.payloads.HouseEnvironmentResponse
-import java.util.UUID
+import red.tetracube.tetracubeapp.data.repositories.remote.smarthome.payloads.HouseEnvironmentResponse
+import java.util.*
 
 data class Environment(
     val id: UUID,

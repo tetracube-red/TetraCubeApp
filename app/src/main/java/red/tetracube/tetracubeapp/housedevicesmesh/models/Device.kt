@@ -3,7 +3,7 @@ package red.tetracube.tetracubeapp.housedevicesmesh.models
 import androidx.compose.ui.graphics.Color
 import red.tetracube.tetracubeapp.R
 import red.tetracube.tetracubeapp.core.definitions.DeviceType
-import red.tetracube.tetracubeapp.data.repositories.remote.housedevicesmesh.payloads.HouseMeshDeviceResponse
+import red.tetracube.tetracubeapp.data.repositories.remote.smarthome.payloads.HouseMeshDeviceResponse
 import java.util.*
 
 data class Device(

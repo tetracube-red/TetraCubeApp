@@ -35,4 +35,5 @@
 
     <!-- House devices mesh screen -->
     <string name="devices_error_loading">Cannot load devices, try to refresh</string>
+    <string name="devices_error_loading_do_refresh">Refresh</string>
 </resources>

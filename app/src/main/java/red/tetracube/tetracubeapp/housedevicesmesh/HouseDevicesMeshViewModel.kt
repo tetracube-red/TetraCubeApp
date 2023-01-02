@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import red.tetracube.tetracubeapp.core.definitions.ServiceCallStatus
 import red.tetracube.tetracubeapp.core.settings.PairedTetraCube
-import red.tetracube.tetracubeapp.data.repositories.remote.housedevicesmesh.HouseDevicesMeshAPIClient
+import red.tetracube.tetracubeapp.data.repositories.remote.smarthome.HouseDevicesMeshAPIClient
 import red.tetracube.tetracubeapp.housedevicesmesh.models.Device
 
 class HouseDevicesMeshViewModel : ViewModel() {
