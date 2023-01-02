@@ -11,27 +11,23 @@
     <string name="getting_tetracube_metadata">Getting tetracube metadata</string>
     <string name="missing_hosts">Missing Hosts</string>
 
-    <!-- User login screen -->
-    <string name="username">Username</string>
-    <string name="authentication_code">Authentication Code</string>
+    <!-- Guest login screen -->
+    <string name="nickname">Nickname</string>
+    <string name="password">Password</string>
     <string name="tetracube_host_address">Hostname</string>
     <string name="do_user_login">Do Login</string>
-    <string name="account_registration_connection_error_title">Connection Error</string>
-    <string name="account_registration_connection_error_message">Cannot connect to the TetraCube\'s host specified</string>
+    <string name="guest_login_connection_error_title">Connection Error</string>
+    <string name="guest_login_connection_error_message">Cannot connect to the TetraCube\'s host specified</string>
     <string name="registration_error_retry">Try again</string>
-    <string name="account_registration_success_title">Success</string>
-    <string name="account_registration_success_message">Account registered successfully</string>
-    <string name="registration_success">Go On</string>
-    <string name="account_registration_unknown_error_title">Error</string>
-    <string name="account_registration_unknown_error_message">Faced a generic error, check the TetraCube\'s service status</string>
-    <string name="account_registration_timeout_error_title">TetraCube timeout</string>
-    <string name="account_registration_timeout_error_message">Connection timeout while trying to connect to TetraCube host</string>
-    <string name="account_registration_not_found_error_title">Not Found</string>
-    <string name="account_registration_not_found_error_message">House or token not found</string>
-    <string name="account_registration_conflicting_error_title">Conflict</string>
-    <string name="account_registration_conflicting_error_message">Account already exists with same name</string>
-    <string name="account_registration_invalid_token_title">Invalid token</string>
-    <string name="account_registration_invalid_token_message">Token expired or already in use</string>
+    <string name="guest_login_success_title">Success</string>
+    <string name="guest_login_success_message">Guest login success</string>
+    <string name="login_success">Go On</string>
+    <string name="guest_login_unknown_error_title">Error</string>
+    <string name="guest_login_unknown_error_message">Faced a generic error, check the TetraCube\'s service status</string>
+    <string name="guest_login_timeout_error_title">TetraCube timeout</string>
+    <string name="guest_login_timeout_error_message">Connection timeout while trying to connect to TetraCube host</string>
+    <string name="guest_login_unauthorized_title">Unauthorized</string>
+    <string name="guest_login_unauthorized_message">Invalid login credentials</string>
 
     <!-- Bottom bar -->
     <string name="bottom_bar_house_devices_mesh">Devices Mesh</string>

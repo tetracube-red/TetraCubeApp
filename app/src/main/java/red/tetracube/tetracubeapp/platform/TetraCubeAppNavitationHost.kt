@@ -7,13 +7,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import red.tetracube.tetracubeapp.core.settings.TetraCubeSettings
+import red.tetracube.tetracubeapp.guest.login.GuestLoginScreen
+import red.tetracube.tetracubeapp.guest.login.GuestLoginScreenRoute
 import red.tetracube.tetracubeapp.housedevicesmesh.HouseDevicesMeshRoute
 import red.tetracube.tetracubeapp.housedevicesmesh.HouseDevicesMeshScreen
 import red.tetracube.tetracubeapp.splash.SplashScreen
 import red.tetracube.tetracubeapp.splash.SplashScreenRoute
 import red.tetracube.tetracubeapp.todo.ToDoRoute
-import red.tetracube.tetracubeapp.userlogin.UserLoginScreen
-import red.tetracube.tetracubeapp.userlogin.UserLoginScreenRoute
 
 @Composable
 fun TetraCubeAppNavigationHost(
@@ -32,8 +32,8 @@ fun TetraCubeAppNavigationHost(
                 navHostController = navHostController
             )
         }
-        composable(route = UserLoginScreenRoute.route) {
-            UserLoginScreen(
+        composable(route = GuestLoginScreenRoute.route) {
+            GuestLoginScreen(
                 navHostController = navHostController
             )
         }

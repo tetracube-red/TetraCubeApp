@@ -1,4 +1,4 @@
-package red.tetracube.tetracubeapp.data.repositories.remote.account
+package red.tetracube.tetracubeapp.data.repositories.remote.guest
 
 import android.util.Log
 import io.ktor.client.*
@@ -13,11 +13,11 @@ import io.ktor.serialization.jackson.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import red.tetracube.tetracubeapp.core.definitions.ServiceCallStatus
 import red.tetracube.tetracubeapp.core.extensions.apiAddress
-import red.tetracube.tetracubeapp.data.repositories.remote.account.payloads.UserLoginRequest
-import red.tetracube.tetracubeapp.data.repositories.remote.account.payloads.UserLoginResponse
+import red.tetracube.tetracubeapp.data.repositories.remote.guest.payloads.GuestLoginRequest
+import red.tetracube.tetracubeapp.data.repositories.remote.guest.payloads.GuestLoginResponse
 import java.net.ConnectException
 
-class UserAPIClient {
+class GuestAPIClient {
 
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
@@ -34,15 +34,15 @@ class UserAPIClient {
     val serviceCallStatus =  MutableSharedFlow<ServiceCallStatus>()
 
     suspend fun userLogin(
-        username: String,
-        authenticationCode: String,
+        nickname: String,
+        password: String,
         apiServiceAddress: String
-    ): UserLoginResponse? {
+    ): GuestLoginResponse? {
         serviceCallStatus.emit(ServiceCallStatus.IDLE)
         serviceCallStatus.emit(ServiceCallStatus.CONNECTING)
 
-        val enrollmentRequest = UserLoginRequest(username, authenticationCode)
-        val requestUrl = "${apiServiceAddress.apiAddress()}/users/login"
+        val enrollmentRequest = GuestLoginRequest(nickname, password)
+        val requestUrl = "${apiServiceAddress.apiAddress()}/guests/login"
         try {
             val response: HttpResponse = client.post(requestUrl) {
                 contentType(ContentType.Application.Json)
@@ -57,14 +57,6 @@ class UserAPIClient {
             when (response.status) {
                 HttpStatusCode.NotFound -> {
                     serviceCallStatus.emit(ServiceCallStatus.FINISHED_ERROR_NOT_FOUND)
-                    return null
-                }
-                HttpStatusCode.BadRequest -> {
-                    serviceCallStatus.emit(ServiceCallStatus.FINISHED_INVALID_TOKEN)
-                    return null
-                }
-                HttpStatusCode.Conflict -> {
-                    serviceCallStatus.emit(ServiceCallStatus.FINISHED_CONFLICTING)
                     return null
                 }
                 HttpStatusCode.Forbidden, HttpStatusCode.Unauthorized -> {

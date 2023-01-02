@@ -12,8 +12,8 @@ message PairedTetraCube {
   bool is_default = 1;
   string authentication_token = 2;
   string host = 4;
-  string account_name = 5;
-  string account_id = 6;
+  string guest_nickname = 5;
+  string guest_id = 6;
   string house_id = 7;
   string house_name = 8;
 }
